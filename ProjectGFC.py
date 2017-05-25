@@ -3,10 +3,23 @@
 # May 25, 2017
 
 # Generally assume correct input.
+import os
+import time
 import sys
 import numpy as np
 from numpy.polynomial import polynomial as P
 
+
+# numberCheck is a function that validates if an input was an integer.
+def numberCheck(num):
+	try: 
+		int(num)
+		return int(num)
+	except ValueError:
+		print 'Input was not a number!'
+		time.sleep(3)
+		sys.exit()
+	
 
 # operationChooser is a function that prints options for the user to choose from, saves user input, and returns it as an integer.
 def operationChooser():
@@ -17,7 +30,8 @@ def operationChooser():
 	print "4. [Division] A(x) / B(x) "
 	operation = raw_input()
 	
-	return int(operation)
+	return numberCheck(operation)
+
 	
 # polyPrinter is a function that prints a polynomial in a 'pretty format' as an output in the console using a numpy array as an input argument.
 def polyPrinter(list):
@@ -49,14 +63,20 @@ print "Welcome to Galois Field Calculator [GF(2^m)]!\n"
 # Asks user to input coefficients of polynomials A(x), B(x), and P(x), and saves each of them as a numpy array.
 A = raw_input("Please input the coefficients of the polynomial A(x): ")
 a = A.split()
+for x in a:
+	numberCheck(x)
 a = np.array([int(x) for x in a])
 
 B = raw_input("Please input the coefficients of the polynomial B(x): ")
 b = B.split()
+for x in b:
+	numberCheck(x)
 b = np.array([int(x) for x in b])
 
 C = raw_input("Please input the coefficients of the irreducible polynomial P(x): ")
 c = C.split()
+for x in c:
+	numberCheck(x)
 c = np.array([int(x) for x in c])
 
 
@@ -103,3 +123,5 @@ answer = [x % 2 for x in answer]
 # Prints out the final simplified result as a polynomial using the function polyPrinter.
 print 'Output of Chosen Operation = ',
 polyPrinter(answer)
+
+os.system('pause')
